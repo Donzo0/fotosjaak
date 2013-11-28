@@ -4,7 +4,7 @@
 	$db = mysql_connect("localhost", "root", "")
 						or die("geen verbinding db");
 	// selecteerd database en verbind hem daarmee
-	mysql_select_db("prive", $db)
+	mysql_select_db("fotosjaak", $db)
 					or die("geen verbing db!");
 
 	switch ($_POST['submit']) {
@@ -30,16 +30,41 @@
 			$password = $_POST['password'];
 			$query = ('SELECT * FROM users WHERE email ="$email" and password ="$password"');
 
-			mysql_query($query, $db)
+			$result = mysql_query($query, $db)
 						or die("query fail");
-			header("location:read.php");
-		
+			var_dump($result);
+			if(mysql_num_rows($result) > 0)
+		{
+			$record = mysql_fetch_array($result);
+			$_SESSION['id'] = $record['id'];
+			$_SESSION['password'] = $record['password'];
+			$_SESSION['userrole'] = $record['userrole'];
+			$_SESSION['ingelogd'] = true;
+
+			switch ($record['userrole']) {
+				case 'customer':
+					header("location:customer.php");
+					break;
+				case 'admin':
+					header("location:admin.php");
+					break;
+				case 'root':
+					header("location:root.php");
+					break;	
+			}
+		}
+		else
+		{
+			echo "Gebruikersnaam en/of wachtwoord fout ingevuld.";
+			header("refresh:10; url=login.php");
+		}
 	}
 	else
 	{
-		echo "veld niet ingevuld";
+		echo 'veld niet ingevuld';
 	}
-			break;
+
+		break;
 	case 'update':
 		$email = $_POST['email'];
 		$password = $_POST['password'];
