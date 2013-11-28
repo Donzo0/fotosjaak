@@ -28,30 +28,31 @@
 	{
 			$email = $_POST['email'];
 			$password = $_POST['password'];
-			$query = ('SELECT * FROM users WHERE email ="$email" and password ="$password"');
-
+			$query = "SELECT * FROM users WHERE email = '$email' and password = '$password'";
+			//echo $query; exit();
 			$result = mysql_query($query, $db)
 						or die("query fail");
-			var_dump($result);
+			echo "bjvvvbb: ".mysql_num_rows($result);
 			if(mysql_num_rows($result) > 0)
-		{
-			$record = mysql_fetch_array($result);
-			$_SESSION['id'] = $record['id'];
-			$_SESSION['password'] = $record['password'];
-			$_SESSION['userrole'] = $record['userrole'];
-			$_SESSION['ingelogd'] = true;
-
-			switch ($record['userrole']) {
-				case 'customer':
-					header("location:customer.php");
-					break;
-				case 'admin':
-					header("location:admin.php");
-					break;
-				case 'root':
-					header("location:root.php");
-					break;	
-			}
+			{
+					
+				$record = mysql_fetch_array($result);
+				$_SESSION['id'] = $record['id'];
+				$_SESSION['password'] = $record['password'];
+				$_SESSION['userrole'] = $record['userrole'];
+				$_SESSION['ingelogd'] = true;
+				var_dump($record);
+				switch ($record['userrole']) {
+					case 'customer':
+						header("location:customer.php");
+						break;
+					case 'admin':
+						header("location:admin.php");
+						break;
+					case 'root':
+						header("location:root.php");
+						break;	
+				}
 		}
 		else
 		{
