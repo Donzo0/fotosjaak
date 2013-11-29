@@ -29,11 +29,13 @@
 		}
 	}
 	
+	echo "test pagina";
+	
 	//Maak nu een object (instantie) van de MySqlDatabaseClass
 	$database = new MySqlDatabaseClass();
 	
 	// Selecteer een tabel uit de database
-	$query = "SELECT * FROM user";
+	$query = "SELECT * FROM users";
 	$result = $database->fire_query($query);
 	
 	while ($row = mysql_fetch_array($result))
