@@ -29,3 +29,6 @@
 		}
 	}
 	
+	//Maak nu een object (instantie) van de MySqlDatabaseClass
+	$database = new MySqlDatabaseClass();
+	
