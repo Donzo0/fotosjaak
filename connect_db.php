@@ -23,16 +23,16 @@
 	header("location:index.php");
 			break;
 		
-		case 'inloggen': var_dump($_POST);
+		case 'inloggen':
 			if (!empty($_POST['email'])	 && !empty($_POST['password']))
 	{
 			$email = $_POST['email'];
 			$password = $_POST['password'];
+			// selecteerd de tabel met de gegevens die je witl hebben
 			$query = "SELECT * FROM users WHERE email = '$email' and password = '$password'";
-			//echo $query; exit();
+			//Verstuurd de query naar de database
 			$result = mysql_query($query, $db)
 						or die("query fail");
-			echo "bjvvvbb: ".mysql_num_rows($result);
 			if(mysql_num_rows($result) > 0)
 			{
 					
