@@ -18,7 +18,7 @@
 							<a class='noborder' href="index.php">Home</a>
 						</li>
 						<li>
-							<a href="class//MySqlDatabaseClass.php">Home</a>
+							<a href="classes/MySqlDatabaseClass.php">Home</a>
 						</li>
 						<li>
 							<a href="index.php">Home</a>
