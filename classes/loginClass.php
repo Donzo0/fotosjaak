@@ -6,6 +6,7 @@
 	{
 		//FIELDS
 		private $login_id;
+		public $login_id;
 		private $email ;
 		private $password ;
 		private $userrole ;
@@ -32,12 +33,23 @@
 			while ($row = mysql_fetch_array($result)) 
 			{
 				$object = LoginClass();
-				$this->login_id = $row['login_id'];
-				$this->email 	= $row['emial'];
-				$this->password = $row['password'];
+				$object = new LoginClass();
+				
+				
+
+		        $this->login_id    = $row['login_id'];
+		        $this->email    = $row['email'];
+		        $this->password    = $row['password'];
+		        $this->userrole   = $row['userrole'];
 				$this->isactivated = $row['isactivated'];
 				$this->registerdate = $row['registerdate'];
+				
+		       //Stop het $object gemaakt van de LoginClass
+		       //in het objectarray genaamd
+		       //$object_array
+        	   $object_array[] = $object;   
 			}
+		     return $object_array;
 		}
 		
 	}
