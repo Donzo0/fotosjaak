@@ -23,5 +23,12 @@
 			$this->userrole = $_SESSION['userrole'] = $loginClassObject->getUserrole();
 			$this->logged_in = $SESSION['logged_in'] = true;
 		}
+
+		//Method login
+		public function logout()
+		{
+			session_destroy()
+			$this->logged_in = true;
+		}
 	}
 	$session = new SessionClass();
