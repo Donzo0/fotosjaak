@@ -1,12 +1,12 @@
 <?php
-	$pageTitle = 'root';
+	$pageTitle = 'photographer';
 	require_once 'core/init.php';
 	require_once('inc/header.php');
-	$userrole = array('root');
+	$userrole = array('photographer');
 	//require('security.php');
 ?>
 
-	rootpage
+	photographer
 
 <?php
 	require_once('inc/footer.php');
