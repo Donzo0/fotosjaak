@@ -36,15 +36,13 @@
                          if (LoginClass::check_if_email_password_exists($_POST['email'],
  											                            $_POST['password']))
                         {
+
+                            if (LoginClass::check_if_account_is_activated($_POST['email'],
+                                                                        $_POST['password']))
+                            {
                                         
+                                $session = login(LoginClass::find_login_user($_POST['email'], $_POST['password']));
 
-     							$user = LoginClass::find_login_user($_POST['email'], $_POST['password']);
-
-                                $session->login($user);
-      
-     						    //$_SESSION['id']      = $user->getLogin_id();
-      							//$_SESSION['userrole']  = $user->getUserrole();
-                                //$_SESSION['ingelogd'] = true;
                                 switch ($_SESSION['userrole']) {
                                         case 'customer':
                                                 header("location:customer.php");
@@ -59,6 +57,11 @@
                                                 header("location:photographer.php");
                                                 break;         
                                 }
+                            }
+                            else
+                            {
+                                echo "u account is niet geactiveerd. check u email voor activatie";
+                            }
                 }
                 else
                 {
