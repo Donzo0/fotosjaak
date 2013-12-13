@@ -3,7 +3,7 @@
 	require_once 'core/init.php';
 	require_once('inc/header.php');
 	$userrole = array('root', 'admin');
-	require('security.php');
+	//require('security.php');
 ?>
 
 	adminpage

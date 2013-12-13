@@ -25,6 +25,7 @@
                 
                 case 'inloggen':
 					    require_once("classes/LoginClass.php");
+                        require_once("classes/SessionClass.php");
 	
   						// Check of de loginformulier velden wel zijn ingevuld
                         if (!empty($_POST['email'])       && !empty($_POST['password']))
@@ -37,12 +38,13 @@
                         {
                                         
 
-     							$user = LoginClass::find_login_user($_POST['email'],
-                        		$_POST['password']);
+     							$user = LoginClass::find_login_user($_POST['email'], $_POST['password']);
+
+                                $session->login($user);
       
-     						    $_SESSION['id']      = $user->getLogin_id();
-      							$_SESSION['userrole']  = $user->getUserrole();
-                                $_SESSION['ingelogd'] = true;
+     						    //$_SESSION['id']      = $user->getLogin_id();
+      							//$_SESSION['userrole']  = $user->getUserrole();
+                                //$_SESSION['ingelogd'] = true;
                                 switch ($_SESSION['userrole']) {
                                         case 'customer':
                                                 header("location:customer.php");
