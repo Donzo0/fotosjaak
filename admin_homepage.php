@@ -1,5 +1,5 @@
 <?php
-	$userrole = array('root', 'admin');
+	$userrole = array('root', 'administator');
 	include('security.php');
 ?>
 <h3>Welkom op uw adminpagina</h3>

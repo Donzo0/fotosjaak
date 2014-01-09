@@ -123,5 +123,25 @@
 			$record_array = self::find_by_sql($query);
 			return array_shift($record_array);
 		}
+		
+		public static function check_if_account_is_activated($email,
+														  	 $password)
+		{
+			$query = "SELECT	*
+					  FROM		`login`
+					  WHERE		`email`		=	'".$email."'
+					  AND		`password`	=	'".$password."'";
+			
+			$user_array = self::find_by_sql($query);
+			$user = array_shift($user_array);
+			if ($user->getIsactivated() == 'yes')
+			{
+				return true;
+			}
+			else 
+			{
+				return false;
+			}			
+		}
 }
 ?>

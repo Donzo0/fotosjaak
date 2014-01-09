@@ -12,9 +12,8 @@
 				
 		//Constructor
 		public function __construct()
-		{
-				
-			session_start();
+		{				
+			//session_start();
 			//echo "Hallo123";exit();
 		}
 		
@@ -26,7 +25,17 @@
 			$this->email		= $_SESSION['email']	= $loginClassObject->getEmail();
 			$this->userrole		= $_SESSION['userrole']	= $loginClassObject->getUserrole();
 			$this->logged_in	= $_SESSION['logged_in']= true;			
-		}		
+		}
+		
+		// Method logout
+		public function logout()
+		
+		
+		
+		{
+			session_destroy();
+			$this->logged_in = false;
+		}	
 	}
 	$session = new SessionClass();
 ?>
