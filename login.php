@@ -1,15 +1,22 @@
-<?php
-	$pageTitle = 'Home';
-	require_once 'core/init.php';
-	require_once 'inc/header.php';
-?>
-
-<h1>inloggen</h1>
-<form action="connect_db.php" method="post">
-	<input type="e-mail" name="email" placeholder="E-mail">
-	<input type="password" name="password" placeholder="wachtwoord">
-	<input type="submit" name="submit" value="inloggen">
+<form action='./index.php?content=checklogin' method='post'>
+	<table>
+			<tr>
+				<td>emailadres: </td>
+				<td>
+					<input type="email" name="email" />
+				</td>	
+			</tr>
+			<tr>
+				<td>wachtwoord: </td>
+				<td>
+					<input type="password" name="password" />
+				</td>	
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input type="submit" name="submit" value="log in" />
+				</td>	
+			</tr>
+	</table>
 </form>
-<?php
-	require_once 'inc/footer.php';
-?>
