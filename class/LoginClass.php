@@ -143,5 +143,42 @@
 				return false;
 			}			
 		}
+		public static function check_if_emailaddress_exists($email)
+		{
+			//database word uit bestand gehaald
+			global $database;
+
+			//query die word verstuurd naar database
+			$query = "SELECT `email`
+						FROM `login`
+						WHERE `email` = '"$email"'";
+
+			//Hier word de query verstuurd naar database
+			$result = $database->fire_query($query);
+			//Er moet meer dan 1 resultaat zijn om true aan te slaan
+			if(mysql_fetch_row($result) > 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public static function insert_into_LoginClass($email)
+		{
+			global $database;
+
+			$query = "INSERT INTO `login` (`login_id`,
+										   `email`,
+										   `password`,
+										   `userrole`,
+										   `isactivated`,
+										   `registerdate`)
+					  Values  				(NULL,
+					  						 '".$email."',
+					  						 '".$password."'"
+		}
 }
 ?>
