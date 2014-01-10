@@ -185,20 +185,9 @@
 					  						 'customer',
 					  						 'no',
 					  						 '".$date."')";
-		$database->fire_query('query');
+		$database->fire_query($query);
 
-		echo mysql_insert_id();
-
-		$firstname = $_POST['firstname'];
-		$infix = $_POST['infix'];
-		$surname = $_POST['surname'];
-		$address = $_POST['address'];
-		$addressnumber = $_POST['addressnumber'];
-		$city = $_POST['city'];
-		$zipcode = $_POST['zipcode'];
-		$country = $_POST['country'];
-		$phonenumber = $_POST['phonenumber'];
-		$mobilephonenumber = $_POST['mobilephonenumber'];
+		$id =  mysql_insert_id();
 
 		$query = "INSERT INTO `user` (`user_id`,
 									  `firstname`,
@@ -212,15 +201,29 @@
 									  `phonenumber`,
 									  `mobilephonenumber`)
 				  VALUES              ('".$id."',
-				  					   '".$fistname."',
-				  					   '".$infix."',
-				  					   '".$surname."',
-				  					   '".$address."',
-				  					   '".$addressnumber."',
-				  					   '".$city."',
-				  					   '".$zipcode."',
-				  					   '".$country."',
-				  					   '".$phonenumber."')";
+				  					   '".$_POST['firstname']."',
+				  					   '".$_POST['infix']."',
+				  					   '".$_POST['surname']."',
+				  					   '".$_POST['address']."',
+				  					   '".$_POST['addressnumber']."',
+				  					   '".$_POST['city']."',
+				  					   '".$_POST['zipcode']."',
+				  					   '".$_POST['country']."',
+				  					   '".$_POST['phonenumber']."',
+				  					   '".$_POST['mobilephonenumber']."')";
+		$database->fire_query($query);
+		self::send_activation_email($_POST['firstname'], $_POST['infix'], $_POST['surname'], $_POST['email'], $temp_password);
+		}
+
+		private static function send_activation_email($firstname,
+													  $infix,
+													  $surname,
+													  $email,
+													  $password)
+		{
+			//code om het mailtje te sturen
+			//echo $firstname.$infix.$surname.$email.$password;exit();
+			mail($email, "Activatie mail FotoSjaak", "Druk op de onderstaande link en ontvang gratis een virus")
 		}
 }
 ?>
