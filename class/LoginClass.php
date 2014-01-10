@@ -172,7 +172,6 @@
 
 			$date = date("Y-m-d H:i:s");
 			$temp_password = md5($email.$date);
-			echo $temp_password; exit;
 
 			$query = "INSERT INTO `login` (`login_id`,
 										   `email`,
@@ -186,6 +185,42 @@
 					  						 'customer',
 					  						 'no',
 					  						 '".$date."')";
+		$database->fire_query('query');
+
+		echo mysql_insert_id();
+
+		$firstname = $_POST['firstname'];
+		$infix = $_POST['infix'];
+		$surname = $_POST['surname'];
+		$address = $_POST['address'];
+		$addressnumber = $_POST['addressnumber'];
+		$city = $_POST['city'];
+		$zipcode = $_POST['zipcode'];
+		$country = $_POST['country'];
+		$phonenumber = $_POST['phonenumber'];
+		$mobilephonenumber = $_POST['mobilephonenumber'];
+
+		$query = "INSERT INTO `user` (`user_id`,
+									  `firstname`,
+									  `infix`,
+									  `surname`,
+									  `address`,
+									  `addressnumber`,
+									  `city`,
+									  `zipcode`,
+									  `country`,
+									  `phonenumber`,
+									  `mobilephonenumber`)
+				  VALUES              ('".$id."',
+				  					   '".$fistname."',
+				  					   '".$infix."',
+				  					   '".$surname."',
+				  					   '".$address."',
+				  					   '".$addressnumber."',
+				  					   '".$city."',
+				  					   '".$zipcode."',
+				  					   '".$country."',
+				  					   '".$phonenumber."')";
 		}
 }
 ?>
