@@ -7,11 +7,12 @@
 	}
 	else
 	{
+		echo "hallo";
 		LoginClass::insert_into_loginClass($_POST['email']);
 
 		exit();
 		
-		//Een sql opdracht die een record naar de tabel users wegschrijft
+/*		//Een sql opdracht die een record naar de tabel users wegschrijft
 		$sql = "INSERT INTO `users` (`id` ,
 									 `firstname` ,
 									 `infix` ,
@@ -48,6 +49,6 @@
 		
 		echo "Uw gegevens zijn opgeslagen in de database. U wordt doorgestuurd naar
 			  de homepage";	
-		header("refresh:4; url=index.php?content=homepage");	
+		header("refresh:4; url=index.php?content=homepage");*/	
 	}
 ?>

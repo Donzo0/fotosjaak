@@ -221,9 +221,23 @@
 													  $email,
 													  $password)
 		{
-			//code om het mailtje te sturen
-			//echo $firstname.$infix.$surname.$email.$password;exit();
-			mail($email, "Activatie mail FotoSjaak", "Druk op de onderstaande link en ontvang gratis een virus")
+			$to = $email;
+			$subject = "Activatie Mail FotoSjaak";
+			$massage = "Geachte Heer/Mevrouw ".$infix." ".$surname."\r\n \r\n";
+			$massage .= "Voor u kan inloggen moet u eerst uw acount activeren\r\n";
+			$massage .= "Klik op onderstaande link om uw acount actief te maken.\r\n";
+			$massage .= "http://localhost/projecten/blok2/FotoSjaak/index.php?content=activation$email= ".$email."$password".$password."\r\n";
+			$massage .= "Met Vriendelijke Groet, \r\n";
+			$massage .= "FotoSkaak uw fotograaf";
+
+			$headers = "Reply-To: info@fotosjaak.nl \r\n";
+			$headers .= "FROM: sjaakdevries@fotosjaak.nl \r\n";
+			$headers .= "Cc: info@fotosjaak.nl \r\n";
+			$headers .= "Bcc: info@fotosjaak.nl \r\n";
+			$headers .= "X-mailer: PHP".phpversion()."\r\n";
+			$headers .= "MIME-version: 1.0 \r\n"; 
+
+			mail($to, $subject, $massage, $headers);
 		}
 }
 ?>
