@@ -151,7 +151,7 @@
 			//query die word verstuurd naar database
 			$query = "SELECT `email`
 						FROM `login`
-						WHERE `email` = '"$email"'";
+						WHERE `email` = '".$email."'";
 
 			//Hier word de query verstuurd naar database
 			$result = $database->fire_query($query);
@@ -170,6 +170,10 @@
 		{
 			global $database;
 
+			$date = date("Y-m-d H:i:s");
+			$temp_password = md5($email.$date);
+			echo $temp_password; exit;
+
 			$query = "INSERT INTO `login` (`login_id`,
 										   `email`,
 										   `password`,
@@ -178,7 +182,10 @@
 										   `registerdate`)
 					  Values  				(NULL,
 					  						 '".$email."',
-					  						 '".$password."'"
+					  						 '".$temp_password."',
+					  						 'customer',
+					  						 'no',
+					  						 '".$date."')";
 		}
 }
 ?>

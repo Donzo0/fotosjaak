@@ -1,13 +1,15 @@
 <?php
-
-	if( LoginClass::check_if_emailaddress_exists($_POST['email']))
+	require_once("class/LoginClass.php");
+	if(LoginClass::check_if_emailaddress_exists($_POST['email']))
 	{
 		echo "Het email dat u ingevuld heedt bestaat al";
 		header("refresh:4; url=index.php?content=homepage");
 	}
 	else
 	{
-		include("connect_db.php");
+		LoginClass::insert_into_loginClass($_POST['email']);
+
+		exit();
 		
 		//Een sql opdracht die een record naar de tabel users wegschrijft
 		$sql = "INSERT INTO `users` (`id` ,
