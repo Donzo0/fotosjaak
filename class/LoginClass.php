@@ -143,101 +143,72 @@
 				return false;
 			}			
 		}
+		
 		public static function check_if_emailaddress_exists($email)
 		{
-			//database word uit bestand gehaald
 			global $database;
-
-			//query die word verstuurd naar database
+							
 			$query = "SELECT `email`
-						FROM `login`
-						WHERE `email` = '".$email."'";
-
-			//Hier word de query verstuurd naar database
+					  FROM	 `login`
+					  WHERE	 `email` = '".$email."'";
+					  
 			$result = $database->fire_query($query);
-			//Er moet meer dan 1 resultaat zijn om true aan te slaan
-			if(mysql_fetch_row($result) > 0)
+			if ( mysql_num_rows($result) > 0)
 			{
-				return true;
+				return true;				
 			}
 			else
 			{
 				return false;
-			}
+			}			
 		}
-
-		public static function insert_into_LoginClass($email)
+		
+		public static function insert_into_loginClass($email)
 		{
 			global $database;
-
+			
 			$date = date("Y-m-d H:i:s");
-			$temp_password = md5($email.$date);
-
+			$temp_password = MD5($email.$date);
+						
 			$query = "INSERT INTO `login` (`login_id`,
 										   `email`,
 										   `password`,
 										   `userrole`,
 										   `isactivated`,
 										   `registerdate`)
-					  Values  				(NULL,
-					  						 '".$email."',
-					  						 '".$temp_password."',
-					  						 'customer',
-					  						 'no',
-					  						 '".$date."')";
-		$database->fire_query($query);
-
-		$id =  mysql_insert_id();
-
-		$query = "INSERT INTO `user` (`user_id`,
-									  `firstname`,
-									  `infix`,
-									  `surname`,
-									  `address`,
-									  `addressnumber`,
-									  `city`,
-									  `zipcode`,
-									  `country`,
-									  `phonenumber`,
-									  `mobilephonenumber`)
-				  VALUES              ('".$id."',
-				  					   '".$_POST['firstname']."',
-				  					   '".$_POST['infix']."',
-				  					   '".$_POST['surname']."',
-				  					   '".$_POST['address']."',
-				  					   '".$_POST['addressnumber']."',
-				  					   '".$_POST['city']."',
-				  					   '".$_POST['zipcode']."',
-				  					   '".$_POST['country']."',
-				  					   '".$_POST['phonenumber']."',
-				  					   '".$_POST['mobilephonenumber']."')";
-		$database->fire_query($query);
-		self::send_activation_email($_POST['firstname'], $_POST['infix'], $_POST['surname'], $_POST['email'], $temp_password);
-		}
-
-		private static function send_activation_email($firstname,
-													  $infix,
-													  $surname,
-													  $email,
-													  $password)
-		{
-			$to = $email;
-			$subject = "Activatie Mail FotoSjaak";
-			$massage = "Geachte Heer/Mevrouw ".$infix." ".$surname."\r\n \r\n";
-			$massage .= "Voor u kan inloggen moet u eerst uw acount activeren\r\n";
-			$massage .= "Klik op onderstaande link om uw acount actief te maken.\r\n";
-			$massage .= "http://localhost/projecten/blok2/FotoSjaak/index.php?content=activation$email= ".$email."$password".$password."\r\n";
-			$massage .= "Met Vriendelijke Groet, \r\n";
-			$massage .= "FotoSkaak uw fotograaf";
-
-			$headers = "Reply-To: info@fotosjaak.nl \r\n";
-			$headers .= "FROM: sjaakdevries@fotosjaak.nl \r\n";
-			$headers .= "Cc: info@fotosjaak.nl \r\n";
-			$headers .= "Bcc: info@fotosjaak.nl \r\n";
-			$headers .= "X-mailer: PHP".phpversion()."\r\n";
-			$headers .= "MIME-version: 1.0 \r\n"; 
-
-			mail($to, $subject, $massage, $headers);
+					  VALUES			  (Null,
+					  					   '".$email."',
+					  					   '".$temp_password."',
+					  					   'customer',
+					  					   'no',
+					  					   '".$date."')";
+		    //echo $query; exit();
+			$database->fire_query($query);
+			
+			$id = mysql_insert_id();	
+			
+			$query = "INSERT INTO `user` (`user_id`,
+										  `firstname`,
+										  `infix`,
+										  `surname`,
+										  `address`,
+										  `addressnumber`,
+										  `city`,
+										  `zipcode`,
+										  `country`,
+										  `phonenumber`,
+										  `mobilephonenumber`)
+					  VALUES			 ('".$id."',
+					  					  '".$_POST['firstname']."',
+					  					  '".$_POST['infix']."',
+					  					  '".$_POST['surname']."',
+					  					  '".$_POST['address']."',
+					  					  '".$_POST['addressnumber']."',
+					  					  '".$_POST['city']."',
+										  '".$_POST['zipcode']."',
+										  '".$_POST['country']."',
+										  '".$_POST['phonenumber']."'
+										  '".$_POST['mobilephonenumber']."')";		
 		}
 }
 ?>

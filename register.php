@@ -1,18 +1,20 @@
 <?php
 	require_once("class/LoginClass.php");
-	if(LoginClass::check_if_emailaddress_exists($_POST['email']))
+	
+	if ( LoginClass::check_if_emailaddress_exists($_POST['email']))
 	{
-		echo "Het email dat u ingevuld heedt bestaat al";
-		header("refresh:4; url=index.php?content=homepage");
+		echo "Het door u ingevulde emailadres is al bij ons in gebruik.<br>
+		      U wordt teruggestuurd naar de registratiepagina.";
+		header("refresh:5;url=index.php?content=register_form");
+		
 	}
-	else
+	else 
 	{
-		echo "hallo";
 		LoginClass::insert_into_loginClass($_POST['email']);
-
+		
 		exit();
 		
-/*		//Een sql opdracht die een record naar de tabel users wegschrijft
+		//Een sql opdracht die een record naar de tabel users wegschrijft
 		$sql = "INSERT INTO `users` (`id` ,
 									 `firstname` ,
 									 `infix` ,
@@ -49,6 +51,6 @@
 		
 		echo "Uw gegevens zijn opgeslagen in de database. U wordt doorgestuurd naar
 			  de homepage";	
-		header("refresh:4; url=index.php?content=homepage");*/	
-	}
+		header("refresh:4; url=index.php?content=homepage");
+	}	
 ?>
