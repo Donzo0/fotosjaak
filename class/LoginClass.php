@@ -91,7 +91,7 @@
 					  FROM		`login`
 					  WHERE		`email`		= '".$email."'
 					  AND		`password`	= '".$password."'";
-			
+			//echo $query; exit();
 			/* De query wordt afgevuurd op de database 
 			 */
 			$result = $database->fire_query($query);
@@ -99,6 +99,7 @@
 			/* mysql_num_rows telt het aantal gevonden records van
 			 * de resource $result 
 			 */
+			//echo mysql_num_rows($result);exit();
 			return mysql_num_rows($result);
 		}
 
@@ -207,8 +208,61 @@
 					  					  '".$_POST['city']."',
 										  '".$_POST['zipcode']."',
 										  '".$_POST['country']."',
-										  '".$_POST['phonenumber']."'
-										  '".$_POST['mobilephonenumber']."')";		
+										  '".$_POST['phonenumber']."',
+										  '".$_POST['mobilephonenumber']."')";
+			$database->fire_query($query);
+			self::send_activation_email($_POST['firstname'], $_POST['infix'], $_POST['surname'], $email, $temp_password);
+							  		
+		}
+		
+		private static function send_activation_email($firstname,
+													  $infix,
+													  $surname,
+													  $email,
+													  $password)
+		{
+			$to 	 = $email;
+			
+			$subject = "Activatie mail website FotoSjaak";
+			
+			/*
+			$message = "Geachte heer/mevrouw ".$infix." ".$surname."\r\n";
+			$message .= "Voor u kunt inloggen moet uw account nog\r\n";
+			$message .= "geactiveerd worden.\r\n";
+			$message .= "Klik hiervoor op de onderstaande link:\r\n";
+			$message .= "http://localhost/2013-2014/Blok2/AM1B/fotosjaak/index.php?content=activation&email=".$email."&password=".$password."\r\n";
+			$message .= "Met vriendelijke groet,\r\n";
+			$message .= "Fotosjaak uw fotograaf";
+			*/
+			
+			$message = "<u><b>Geachte</b> heer/mevrouw ".$infix." ".$surname."</u><br><br>";
+			$message .= "Voor u kunt inloggen moet uw account nog<br>";
+			$message .= "geactiveerd worden.<br>";
+			$message .= "Klik hiervoor op de onderstaande link:<br><br>";
+			$message .= "<a href='http://localhost/2013-2014/Blok2/AM1B/fotosjaak/index.php?content=activation&email=".$email."&password=".$password."'>activeer</a><br><br>";
+			$message .= "Met vriendelijke groet,<br>";
+			$message .= "Fotosjaak uw fotograaf";
+			
+			$headers = "Reply-To: info@fotosjaak.nl\r\n";
+			$headers .= "From: sjaakdevries@fotosjaak.nl\r\n";
+			$headers .= "Cc: info@fotosjaak.nl\r\n";
+			$headers .= "Bcc: info@fotosjaak.nl\r\n";
+			$headers .= "X-mailer: PHP".phpversion()."\r\n";
+			$headers .= "MIME-version: 1.0.\r\n";
+			//$headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
+			$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+			
+			mail($to, $subject, $message, $headers);			
+		}
+
+		public static function update_password_in_login($email, $password)
+		{	
+			global $database;			
+			$query = "UPDATE `login`
+					  SET `password` = '".$password."',
+					  	  `isactivated` = 'yes'
+					  WHERE `email` = '".$email."'";
+			$database->fire_query($query);
 		}
 }
 ?>

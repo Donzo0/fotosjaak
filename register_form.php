@@ -52,7 +52,15 @@
 			<td>
 				<input type="text" name="zipcode"  maxlength="6" />
 			</td>
-		</tr>		
+		</tr>
+		<tr>
+			<td>Land: </td>
+		<tr>
+		<tr>
+			<td>
+				<input type="text" name="country"  maxlength="300" />
+			</td>
+		</tr>			
 		<tr>
 			<td>emailadres: </td>
 		<tr>

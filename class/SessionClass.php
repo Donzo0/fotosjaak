@@ -13,8 +13,7 @@
 		//Constructor
 		public function __construct()
 		{				
-			//session_start();
-			//echo "Hallo123";exit();
+			
 		}
 		
 		
