@@ -239,7 +239,7 @@
 			$message .= "Voor u kunt inloggen moet uw account nog<br>";
 			$message .= "geactiveerd worden.<br>";
 			$message .= "Klik hiervoor op de onderstaande link:<br><br>";
-			$message .= "<a href='http://localhost/2013-2014/Blok2/AM1B/fotosjaak/index.php?content=activation&email=".$email."&password=".$password."'>activeer</a><br><br>";
+			$message .= "<a href='http://localhost/projecten/blok2/FotoSjaak/index.php?content=activation&email=".$email."&password=".$password."'>activeer</a><br><br>";
 			$message .= "Met vriendelijke groet,<br>";
 			$message .= "Fotosjaak uw fotograaf";
 			
