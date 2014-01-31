@@ -221,6 +221,7 @@
 													  $email,
 													  $password)
 		{
+
 			$to 	 = $email;
 			
 			$subject = "Activatie mail website FotoSjaak";
@@ -255,11 +256,11 @@
 			mail($to, $subject, $message, $headers);
 			
 			$subject2 = "Bedankt!";
-			$massage2 = "<u>Geachte heer/mevrouw ".$infix." ".$surname."</u><br><br>";
-			$massage2 = "Nog bedankt voor het registreren.<br>";
-			$massage2 = "Met Vriendlijke groet,<br>";
-			$massage2 = "Fotosjaak";
-			
+			$massage2 = "<u>Geachte heer/mevrouw ".$infix." ".$surname."</u><br>";
+			$massage2 .= "Nog bedankt voor het registreren.<br>";
+			$massage2 .= "Met Vriendlijke groet,<br>";
+			$massage2 .= "Fotosjaak";
+							echo $to." ".$subject2."<br>".$massage2."<br>".$headers; exit();
 				mail($to, $subject2, $massage2, $headers);
 		}
 
