@@ -63,7 +63,7 @@
 			}			
 			return $object_array;
 		}		
-	
+		// Method find_all_records
 		public static function find_all_records()
 		{
 			$query = "SELECT * FROM `login`";
@@ -73,7 +73,7 @@
 			 */
 			return self::find_by_sql($query);
 		}
-
+		// Method check_if_email_password_exists
 		public static function check_if_email_password_exists($email,
 															  $password)
 		{
@@ -102,7 +102,7 @@
 			//echo mysql_num_rows($result);exit();
 			return mysql_num_rows($result);
 		}
-
+		// method find_login_user
 		public static function find_login_user($email, $password)
 		{
 			/* gebruik het $database object dat wordt toegevoegd met 
@@ -124,7 +124,7 @@
 			$record_array = self::find_by_sql($query);
 			return array_shift($record_array);
 		}
-		
+		// method check_if_acount_is_activated
 		public static function check_if_account_is_activated($email,
 														  	 $password)
 		{
@@ -144,7 +144,7 @@
 				return false;
 			}			
 		}
-		
+		//method check_if_emailaddress_exists
 		public static function check_if_emailaddress_exists($email)
 		{
 			global $database;
@@ -154,6 +154,7 @@
 					  WHERE	 `email` = '".$email."'";
 					  
 			$result = $database->fire_query($query);
+			// checkt of resultaat meer dan nul is anders krijg je een false terug
 			if ( mysql_num_rows($result) > 0)
 			{
 				return true;				
@@ -163,7 +164,7 @@
 				return false;
 			}			
 		}
-		
+		// method insert_into_loginClass
 		public static function insert_into_loginClass($email)
 		{
 			global $database;
@@ -214,7 +215,7 @@
 			self::send_activation_email($_POST['firstname'], $_POST['infix'], $_POST['surname'], $email, $temp_password);
 							  		
 		}
-		
+		// method send_activation_email
 		private static function send_activation_email($firstname,
 													  $infix,
 													  $surname,
@@ -263,7 +264,7 @@
 							echo $to." ".$subject2."<br>".$massage2."<br>".$headers; exit();
 				mail($to, $subject2, $massage2, $headers);
 		}
-
+		//method update_password_in_loginf
 		public static function update_password_in_login($email, $password)
 		{	
 			global $database;			
