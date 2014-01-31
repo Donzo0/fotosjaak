@@ -23,6 +23,11 @@
 				case 'admin':
 					//Plaats hier de speciale links voor de admin.
 				break;
+				case 'coworker':
+					echo "<li>
+							<a href='./index.php?content=pandabeer'>Pandabeer</a>
+						  </li>";
+				break;
 				default:
 				break;
 			}		
