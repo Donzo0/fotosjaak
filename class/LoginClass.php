@@ -66,6 +66,7 @@
 		// Method find_all_records
 		public static function find_all_records()
 		{
+			// select query voor login
 			$query = "SELECT * FROM `login`";
 			
 			/* static methods worden aangeroepen met een 
@@ -148,7 +149,8 @@
 		public static function check_if_emailaddress_exists($email)
 		{
 			global $database;
-							
+			
+			//select query om email van login te pakken waar email email is				
 			$query = "SELECT `email`
 					  FROM	 `login`
 					  WHERE	 `email` = '".$email."'";
@@ -171,7 +173,8 @@
 			
 			$date = date("Y-m-d H:i:s");
 			$temp_password = MD5($email.$date);
-						
+			
+			// insert query		
 			$query = "INSERT INTO `login` (`login_id`,
 										   `email`,
 										   `password`,
@@ -189,6 +192,7 @@
 			
 			$id = mysql_insert_id();	
 			
+			//insert query
 			$query = "INSERT INTO `user` (`user_id`,
 										  `firstname`,
 										  `infix`,
