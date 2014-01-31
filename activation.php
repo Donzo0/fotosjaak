@@ -11,6 +11,7 @@
 	if ( !strcmp($_POST['password'], $_POST['password_check']))
 	{
 		echo "De wachtwoorden zijn gelijk";
+		 // Hier selecteer je Update_password_in_login van LoginClass	
 		LoginClass::update_password_in_login($_POST['email'], $_POST['password']);
 		echo "Uw wachtwoord is succesvol gewijzigd. U wordt doorgestuurd<br>
 			  naar de inlogpagina";
@@ -26,7 +27,8 @@
  }
  else 
  {
- 	
+ 
+ // Hier selecteer je check_if_email_password_exists van LoginClass	
  if (LoginClass::check_if_email_password_exists($_GET['email'],
  												$_GET['password']))
  {
