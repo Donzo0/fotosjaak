@@ -252,7 +252,15 @@
 			//$headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
 			$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 			
-			mail($to, $subject, $message, $headers);			
+			mail($to, $subject, $message, $headers);
+			
+			$subject2 = "Bedankt!";
+			$massage2 = "<u>Geachte heer/mevrouw ".$infix." ".$surname."</u><br><br>";
+			$massage2 = "Nog bedankt voor het registreren.<br>";
+			$massage2 = "Met Vriendlijke groet,<br>";
+			$massage2 = "Fotosjaak";
+			
+				mail($to, $subject2, $massage2, $headers);
 		}
 
 		public static function update_password_in_login($email, $password)

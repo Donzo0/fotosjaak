@@ -31,7 +31,7 @@ div#container
 div#banner
 {	
 	background-color:orange;
-	background-image:url(../images/jumbo-banner.jpg);
+	background-image:url(http://placehold.it/745x170);
 	background-repeat:no-repeat;
 	height:170px;
 	border-radius:25px;
