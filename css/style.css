@@ -1,50 +1,35 @@
 *
 {
-	margin:0px;
 	padding:0px;
+	margin:0px;
 }
 
 body
 {
-	font-family:Comic Sans MS;
-	background-color:RGB(180, 180, 1800);
-	color:white;
-	font-size:1.0em;
-	border:0px solid red;
-	margin:10px;
-	background-color:grey;
-}
-
-html
-{
+	background-color:RGB(220, 220, 220);
+	color:RGBA(255, 255, 255, 1);
+	font-size:1.1em;
+	font-family:Comic Sans MS, Arial;
 	border:0px solid green;
+	padding:1em;
+	margin:10px;
 }
 
 div#container
 {
 	background-color:grey;
 	width:745px;
-	margin:20px auto;	
+	margin:0px auto;
 	border-radius:25px;
 }
 
 div#banner
-{	
-	background-color:orange;
-	background-image:url(http://placehold.it/745x170);
+{
+	background-image:url("../images/fotojaak-banner.png");
 	background-repeat:no-repeat;
+	background-color:orange;
 	height:170px;
 	border-radius:25px;
-}
-
-div#content
-{
-	font-size:0.8em;
-	min-height:300px;
-	margin:20px 0px;
-	padding:0px 20px;	
-	position:relative;
-	border:1px solid white;
 }
 
 div#footer
@@ -53,22 +38,27 @@ div#footer
 	text-align:center;
 }
 
-div#link
+div#content
 {
-	position:absolute;
-	top:0px;
-	left:-120px;
-	background-color:grey;
-	width:170;
-	height:200px;
-	border-radius:25px;
-	padding:0.8em;
-	min-width:95px;
+	min-height:300px;
+	border:0px solid white;
+	padding:10px;
+	position:relative;
 }
 
-div#link li
+div#link 
 {
-	text-align:right;
+	border:3px solid white;
+	position:absolute;
+	left:-120px;
+	background-color:grey;
+	border-radius:20px;
+	padding:0.5em;
+}
+
+div#link ul
+{
+	list-style-type:none;
 }
 
 a
@@ -77,23 +67,23 @@ a
 	text-decoration:none;
 }
 
-div#link ul
+table.simple 
 {
-	list-style-type:none;
-}
-
-table.simple
-{
-	background-color:RGBA(150, 150, 150, 1);
 	border-collapse:collapse;
-	border:2px solid white;
-	margin:0px auto;
+	margin:0px auto;	
 }
 
-table.simple td, th
+table.simple  th, td
 {
-	padding:1em;
 	border:1px solid white;
+	text-align:center;
+	padding:0.3em;
+	background-color:RGB(180,180,180);
+	color:black;
 }
 
+table.simple caption
+{
+	background-color:orange;
+}
 

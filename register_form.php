@@ -1,44 +1,34 @@
 <form action="./index.php?content=register" method="post">
-	<table border='1'>
-		<caption>Registratiepagina</caption>
-		<tr>
-			<th>Vul hier uw gegevens in</th>
-		</tr>
+	<table>
 		<tr>
 			<td>voornaam:</td>
 		</tr>
 		<tr>
-			<td>
-				<input type="text" name="firstname" />
-			</td>
+			<td><input type="text" name="firstname" /></td>
 		</tr>
 		<tr>
-			<td>tussenvoegsel:</td>
+			<td>tussenvoegsel</td>
 		</tr>
 		<tr>
-			<td>
-				<input type="text" name="infix" />
-			</td>
+			<td><input type="text" name="infix" /></td>
 		</tr>
 		<tr>
-			<td>achternaam:</td>
+			<td>achternaam</td>
 		</tr>
 		<tr>
-			<td>
-				<input type="text" name="surname" />
-			</td>
+			<td><input type="text" name="surname" /></td>
 		</tr>
 		<tr>
-			<td>Adres: </td>
+			<td>straat + huisnummer</td>
 		</tr>
 		<tr>
 			<td>
 				<input type="text" name="address" />
-				<input type="number" min="0" max="18926" name="addressnumber" />
+				<input type="number" min="0" max="18923" name="addressnumber"/>
 			</td>
 		</tr>
 		<tr>
-			<td>Woonplaats:</td>
+			<td>Stad: </td>
 		</tr>
 		<tr>
 			<td>
@@ -47,71 +37,46 @@
 		</tr>
 		<tr>
 			<td>Postcode: </td>
-		<tr>
+		</tr>
 		<tr>
 			<td>
-				<input type="text" name="zipcode"  maxlength="6" />
+				<input type="text" name="zipcode" />
 			</td>
 		</tr>
 		<tr>
 			<td>Land: </td>
-		<tr>
-		<tr>
-			<td>
-				<input type="text" name="country"  maxlength="300" />
-			</td>
-		</tr>			
-		<tr>
-			<td>emailadres: </td>
-		<tr>
+		</tr>
 		<tr>
 			<td>
-				<input type="email" name="email" required />
+				<input type="text" name="country" />
 			</td>
 		</tr>
 		<tr>
-			<td>telefoonnummer: </td>
-		<tr>
-		<tr>
+			<td>email</td>
+		</tr>
+		<tr>				
 			<td>
-				<input type="text" name="phonenumber" required />
+				<input type='email' name='email' />
 			</td>
 		</tr>
 		<tr>
-			<td>mobiel: </td>
-		<tr>
+			<td>telefoonnummer vast: </td>
+		</tr>
 		<tr>
 			<td>
-				<input type="text" name="mobilephonenumber" required />
+				<input type="text" name="telephonenumber" />
 			</td>
 		</tr>
-		
+		<tr>
+			<td>mobiel nummer: </td>
+		</tr>
 		<tr>
 			<td>
-				<input type="submit" name="submit" value="verstuur" />
+				<input type="text" name="mobilephonenumber" />
 			</td>
+		</tr>		
+		<tr>
+			<td><input type="submit" name="submit" value="verstuur" /></td>
 		</tr>
 	</table>
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</form>		

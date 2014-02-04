@@ -1,7 +1,7 @@
-<?php
+<?php 
 	$userrole = array('root', 'administrator');
-	include('security.php');
+	include("security.php"); 
 ?>
-<h3>Welkom op uw adminpagina</h3>
-uw id is: <?php echo $_SESSION['id']; ?><br>
-uw gebruikersrol is: <?php echo $_SESSION['userrole']; ?>
+<h3>Administrator homepage</h3>
+Uw id is: <?php echo $_SESSION['id']; ?><br>
+Uw gebruikersrol is: <?php echo $_SESSION['userrole']; ?>

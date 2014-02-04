@@ -1,282 +1,296 @@
 <?php
-	require_once('MySqlDatabaseClass.php');
-	
-	//Dit is de class-definitie van de LoginClass
+	require_once("MySqlDatabaseClass.php");
+	require_once("UserClass.php");
+
+	// Hieronder de classdefinitie van de LoginClass
 	class LoginClass
 	{
 		//Fields
-		private $login_id;
+		private $id;
 		private $email;
 		private $password;
 		private $userrole;
-		private $isactivated;
-		private $registerdate;
+		private $activated;
+		private $activationdate;
 		
-		//Properties
-		//getters voor alle fields
-		public function getLogin_id() {	return $this->login_id;	}
-		public function getEmail() { return $this->email; }
-		public function getPassword() { return $this->password; }
-		public function getUserrole() { return $this->userrole; }
-		public function getIsactivated() { return $this->isactivated; }
-		public function getRegisterdate() { return $this->registerdate; }
+		// Properties
+		public function get_id() { return $this->id;}
+		public function get_email() { return $this->email;}
+		public function get_password() { return $this->password;}
+		public function get_userrole() { return $this->userrole;}
+		public function get_activated() { return $this->activated;}
+		public function get_activationdate() { return $this->activationdate;}
 		
-		// De constructor van de LoginClass
-		public function __constructor()
+		//Constructor
+		public function __construct()
 		{
-						
+			
 		}
 		
-		// Method find_by_sql
-		public static function find_by_sql($sql)
+		public static function find_by_sql($query)
 		{
-			// global zorgt ervoor dat $database ook binnen de haakjes
-			// van de find_by_sql method bekent is.	
+			// Met global maak je het database-objct uit de MySqlDatabaseclass
+			// bruikbaar binnen de find_by_sql method
 			global $database;
 			
-			//Roep de fire_query method aan met het $database object
-			$result = $database->fire_query($sql);
-			
-			// Hier wordt een array gedefinieerd. Dit array gaat
-			// LoginClass-objecten bevatten.
-			$object_array = array();
-			
-			// Met deze while-lus vullen we het $object-array met LoginClass-objecten
-			while ($row = mysql_fetch_array($result))
-			{
-				//Maak een nieuw LoginClass-object aan per while ronde	
-				$object = new LoginClass();
-				
-				//Vul de velden van het LoginClass-object met de gevonden record-
-				//waarden uit de tabel
-				$object->login_id		= $row['login_id'];
-				$object->email			= $row['email'];
-				$object->password		= $row['password'];
-				$object->userrole 		= $row['userrole'];
-				$object->isactivated	= $row['isactivated'];
-				$object->registerdate	= $row['registerdate'];
-				
-				//Stop het $object gemaakt van de LoginClass
-				//in het objectarray genaamd
-				//$object_array
-				$object_array[] = $object;				
-			}			
-			return $object_array;
-		}		
-		// Method find_all_records
-		public static function find_all_records()
-		{
-			// select query voor login
-			$query = "SELECT * FROM `login`";
-			
-			/* static methods worden aangeroepen met een 
-			 * dubbele dubbele punt (Engels: double colon)
-			 */
-			return self::find_by_sql($query);
-		}
-		// Method check_if_email_password_exists
-		public static function check_if_email_password_exists($email,
-															  $password)
-		{
-			/* Als we het $database object van de class MySqlDatabaseClass
-			 * willen gebruiken binnen de method check_if_email_exists, dan
-			 * moeten we voor $database global zetten. PHP weet dan dat we
-			 * $database bedoelen die bovenaan met require-once is geinclude 
-			 */
-			global $database;
-			
-			/* Dit is query die records selecteert met het ingevulde
-			 * emailadres en password 
-			 */
-			$query = "SELECT	*
-					  FROM		`login`
-					  WHERE		`email`		= '".$email."'
-					  AND		`password`	= '".$password."'";
-			//echo $query; exit();
-			/* De query wordt afgevuurd op de database 
-			 */
+			//Vuur de query af op de database
 			$result = $database->fire_query($query);
 			
-			/* mysql_num_rows telt het aantal gevonden records van
-			 * de resource $result 
+			/* Dit is het array waar alle LoginClassobjecten in worden gestopt
+			 * Elk LoginClassobject bevat een gevonden record uit de database
+			 * Vindt de query 3 records dan zitten er 3 LoginClassobjecten in 
+			 * het array $object_array. 
 			 */
-			//echo mysql_num_rows($result);exit();
-			return mysql_num_rows($result);
+			$object_array = array();
+			
+			while ( $row = mysql_fetch_array($result))
+			{
+				// Maak iedere while ronde een LoginClassobject aan
+				$object = new LoginClass();
+				// Stop per record ieder databaseveld in het LoginClassobject
+				// veld
+				$object->id				=	$row['id'];
+				$object->email			=	$row['email'];
+				$object->password		=	$row['password'];
+				$object->userrole		=	$row['userrole'];
+				$object->activated		=	$row['activated'];
+				$object->activationdate	=	$row['activationdate'];
+				// Stop het net gemaakte LoginClassobject in het $object_array
+				$object_array[] = $object;			
+			}
+			return $object_array;
 		}
-		// method find_login_user
-		public static function find_login_user($email, $password)
+		
+		/* Deze method selecteert alle records uit de login table. We maken
+		 * gebruik van de find_by_sql($query) method uit deze class.
+		 */ 
+		public static function select_all_from_login()
 		{
-			/* gebruik het $database object dat wordt toegevoegd met 
-			 * require-once
-			 */	
+			$query = "SELECT * FROM `login`";
+			$result = self::find_by_sql($query);
+			return $result;			
+		}
+		
+		public static function email_exists($emailaddress)
+		{
+			global $database;	
+			$query = "SELECT * 
+					  FROM `login` 
+					  WHERE `email` = '".$emailaddress."'";
+			$result = $database->fire_query($query);
+			if ( mysql_num_rows($result) > 0)
+			{
+				return "Het e-mailadres bestaat al in de database";
+			}
+			else
+			{
+				return "Het e-mailadres bestaat niet in de database";
+			}			
+		}
+		
+		public static function check_if_email_password_exists($email, $password)
+		{
 			global $database;
-			
-			/* Dit is query die alle records selecteert met het ingevulde
-			 * emailadres en password afkomstig van het formulier
-			 */
-			$query = "SELECT	*
-					  FROM		`login`
-					  WHERE		`email`		= '".$email."'
-					  AND		`password`	= '".$password."'";
-			
-			/* Met array_shift haal je het ene record uit het array
-			 * en geef je dus een LoginClass object terug 
-			 */
-			$record_array = self::find_by_sql($query);
-			return array_shift($record_array);
-		}
-		// method check_if_acount_is_activated
-		public static function check_if_account_is_activated($email,
-														  	 $password)
-		{
-			$query = "SELECT	*
-					  FROM		`login`
-					  WHERE		`email`		=	'".$email."'
-					  AND		`password`	=	'".$password."'";
-			
-			$user_array = self::find_by_sql($query);
-			$user = array_shift($user_array);
-			if ($user->getIsactivated() == 'yes')
+			$query = "SELECT * 
+					  FROM `login`
+					  WHERE `email` = '".$email."'
+					  AND `password` = '".$password."'";
+			//echo $query; exit();
+			$result = $database->fire_query($query);
+			if (mysql_num_rows($result) > 0)
 			{
 				return true;
 			}
 			else 
 			{
 				return false;
-			}			
+			}
 		}
-		//method check_if_emailaddress_exists
-		public static function check_if_emailaddress_exists($email)
+		 
+		public static function find_user_by_email_password($email, $password)
 		{
-			global $database;
-			
-			//select query om email van login te pakken waar email email is				
-			$query = "SELECT `email`
-					  FROM	 `login`
-					  WHERE	 `email` = '".$email."'";
-					  
-			$result = $database->fire_query($query);
-			// checkt of resultaat meer dan nul is anders krijg je een false terug
-			if ( mysql_num_rows($result) > 0)
+			$query = "SELECT * 
+					  FROM `login`
+					  WHERE `email` = '".$email."'
+					  AND `password` = '".$password."'";
+			//echo $query; exit();
+			$loginClassObjectInArray = self::find_by_sql($query);	
+			return $loginClassObject = array_shift($loginClassObjectInArray);
+		}
+		
+		public static function check_if_account_is_activated($email,
+															 $password)
+		{
+			// Maak een query die het record selecteerd van degene die
+			// inlogd
+			$query = "SELECT	*
+					  FROM		`login`
+					  WHERE		`email`		=	'".$email."'
+					  AND		`password`	=	'".$password."'";
+				
+			// Vuur de query af op de database met de static method
+			// find_by_sql($query)
+			$object_array = self::find_by_sql($query);
+			$loginClassObject = array_shift($object_array);
+			if ( $loginClassObject->activated == 'yes')
 			{
-				return true;				
+				return true;
+			}
+			else 
+			{
+				return false;
+			}
+		}
+		
+		public static function check_if_email_exists($email)
+		{
+			global $database;	
+				
+			// Zet hier je commentaar
+			$query = "SELECT	*
+					  FROM		`login`
+					  WHERE		`email`	=	'".$email."'";
+			
+			// Zet hier je commentaar
+			$result = $database->fire_query($query);
+			
+			// Zet hier je commentaar
+			if (mysql_num_rows($result) > 0)
+			{
+				return true;
 			}
 			else
 			{
 				return false;
-			}			
+			}
+			
+			// Ternary operator variabele 
+			// (vergelijking) ? waarde als waar : waarde als niet waar
+			// return (mysql_num_rows($result) > 0) ? true : false;
 		}
-		// method insert_into_loginClass
-		public static function insert_into_loginClass($email)
+		
+		public static function insert_into_loginClass($post_array)
+		{
+			global $database;
+						
+			$date = date("Y-m-d H:i:s");
+			
+			$tmp_password = $date.$post_array['email'];
+			
+			$hash_from_tmp_password = MD5($tmp_password);
+			
+			$query = "INSERT INTO	`login` (`id`,
+											 `email`,
+											 `password`,
+											 `userrole`,
+											 `activated`,
+											 `activationdate`)
+					  VALUES				(NULL,
+					  						 '".$post_array['email']."',
+					  						 '".$hash_from_tmp_password."',
+					  						 'customer',
+					  						 'no',
+					  						 '".$date."')";
+			$database->fire_query($query);
+			
+			$id = mysql_insert_id();
+			
+			UserClass::insert_into_userClass($post_array, $id);
+			self::send_activation_email($post_array, $hash_from_tmp_password);
+		}
+		
+		public static function send_activation_email($post_array, $password)
+		{
+			$to = $post_array['email'];
+			$subject = "Activatie website FotoSjaak";
+			
+			/*
+			$message = "Geachte heer/mevrouw ".
+					   $post_array['firstname']." ".
+					   $post_array['infix']." ".
+					   $post_array['surname']."\r\n";
+			$message .= "Voor u kunt inloggen moet uw account nog worden geactiveerd.\r\n";
+			$message .= "Klik hiervoor op de onderstaande link\r\n";
+			$message .= "http://localhost/2013-2014/Blok2/AM1A/fotosjaak-am1a/index.php?content=activation&email=".$post_array['email']."&password=".$password."\r\n";
+			$message .= "Met vriendelijke groet,\r\n";
+			$message .= "Sjaak de Vries\r\n";
+			$message .= "Uw fotograaf";	
+			*/
+			
+			$message = "<p><u>Geachte heer/mevrouw <b>".
+					   $post_array['firstname']." ".
+					   $post_array['infix']." ".
+					   $post_array['surname']."</b></u></p>";
+			$message .= "Voor u kunt inloggen, moet uw account nog worden geactiveerd.<br>";
+			$message .= "Klik hiervoor op de onderstaande link<br><br>";
+			$message .= "<a href='http://localhost/2013-2014/Blok2/AM1A/fotosjaak-am1a/index.php?content=activation&email=".$post_array['email']."&password=".$password."'>activeer account</a><br><br>";
+			$message .= "Met vriendelijke groet,<br>";
+			$message .= "Sjaak de Vries<br>";
+			$message .= "Uw fotograaf";	
+			
+			$headers  = "From: info@fotosjaak.nl\r\n";
+			$headers .=	"Reply-To: info@fotosjaak.nl\r\n";
+			$headers .= "Cc: sjaak@fotosjaak.nl\r\n";
+			$headers .= "Bcc: admin@fotosjaak.nl\r\n";
+			$headers .= "X-mailer: PHP/".phpversion()."\r\n";
+			$headers .= "MIME-version: 1.0\r\n";
+			//$headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
+			$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+			mail($to, $subject, $message, $headers);
+		}
+
+		public static function update_password_in_login($email,
+											 			$password)
 		{
 			global $database;
 			
 			$date = date("Y-m-d H:i:s");
-			$temp_password = MD5($email.$date);
 			
-			// insert query		
-			$query = "INSERT INTO `login` (`login_id`,
-										   `email`,
-										   `password`,
-										   `userrole`,
-										   `isactivated`,
-										   `registerdate`)
-					  VALUES			  (Null,
-					  					   '".$email."',
-					  					   '".$temp_password."',
-					  					   'customer',
-					  					   'no',
-					  					   '".$date."')";
-		    //echo $query; exit();
-			$database->fire_query($query);
-			
-			$id = mysql_insert_id();	
-			
-			//insert query
-			$query = "INSERT INTO `user` (`user_id`,
-										  `firstname`,
-										  `infix`,
-										  `surname`,
-										  `address`,
-										  `addressnumber`,
-										  `city`,
-										  `zipcode`,
-										  `country`,
-										  `phonenumber`,
-										  `mobilephonenumber`)
-					  VALUES			 ('".$id."',
-					  					  '".$_POST['firstname']."',
-					  					  '".$_POST['infix']."',
-					  					  '".$_POST['surname']."',
-					  					  '".$_POST['address']."',
-					  					  '".$_POST['addressnumber']."',
-					  					  '".$_POST['city']."',
-										  '".$_POST['zipcode']."',
-										  '".$_POST['country']."',
-										  '".$_POST['phonenumber']."',
-										  '".$_POST['mobilephonenumber']."')";
-			$database->fire_query($query);
-			self::send_activation_email($_POST['firstname'], $_POST['infix'], $_POST['surname'], $email, $temp_password);
-							  		
-		}
-		// method send_activation_email
-		private static function send_activation_email($firstname,
-													  $infix,
-													  $surname,
-													  $email,
-													  $password)
-		{
-
-			$to 	 = $email;
-			
-			$subject = "Activatie mail website FotoSjaak";
-			
-			/*
-			$message = "Geachte heer/mevrouw ".$infix." ".$surname."\r\n";
-			$message .= "Voor u kunt inloggen moet uw account nog\r\n";
-			$message .= "geactiveerd worden.\r\n";
-			$message .= "Klik hiervoor op de onderstaande link:\r\n";
-			$message .= "http://localhost/2013-2014/Blok2/AM1B/fotosjaak/index.php?content=activation&email=".$email."&password=".$password."\r\n";
-			$message .= "Met vriendelijke groet,\r\n";
-			$message .= "Fotosjaak uw fotograaf";
-			*/
-			
-			$message = "<u><b>Geachte</b> heer/mevrouw ".$infix." ".$surname."</u><br><br>";
-			$message .= "Voor u kunt inloggen moet uw account nog<br>";
-			$message .= "geactiveerd worden.<br>";
-			$message .= "Klik hiervoor op de onderstaande link:<br><br>";
-			$message .= "<a href='http://localhost/projecten/blok2/FotoSjaak/index.php?content=activation&email=".$email."&password=".$password."'>activeer</a><br><br>";
-			$message .= "Met vriendelijke groet,<br>";
-			$message .= "Fotosjaak uw fotograaf";
-			
-			$headers = "Reply-To: info@fotosjaak.nl\r\n";
-			$headers .= "From: sjaakdevries@fotosjaak.nl\r\n";
-			$headers .= "Cc: info@fotosjaak.nl\r\n";
-			$headers .= "Bcc: info@fotosjaak.nl\r\n";
-			$headers .= "X-mailer: PHP".phpversion()."\r\n";
-			$headers .= "MIME-version: 1.0.\r\n";
-			//$headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
-			$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-			
-			mail($to, $subject, $message, $headers);
-			
-			$subject2 = "Bedankt!";
-			$massage2 = "<u>Geachte heer/mevrouw ".$infix." ".$surname."</u><br>";
-			$massage2 .= "Nog bedankt voor het registreren.<br>";
-			$massage2 .= "Met Vriendlijke groet,<br>";
-			$massage2 .= "Fotosjaak";
-							echo $to." ".$subject2."<br>".$massage2."<br>".$headers; exit();
-				mail($to, $subject2, $massage2, $headers);
-		}
-		//method update_password_in_loginf
-		public static function update_password_in_login($email, $password)
-		{	
-			global $database;			
 			$query = "UPDATE `login`
-					  SET `password` = '".$password."',
-					  	  `isactivated` = 'yes'
-					  WHERE `email` = '".$email."'";
-			$database->fire_query($query);
+					  SET 	 `password`			= '".$password."',
+					  	  	 `activated`		= 'yes',
+					  	  	 `activationdate`	= '".$date."'
+					  WHERE  `email`			= '".$email."'";
+			$database->fire_query($query);				
 		}
-}
+		
+		public static function find_email_password_by_id()
+		{
+			$query = "SELECT *
+					  FROM `login` 
+					  WHERE `id` = '".$_SESSION['id']."'";
+			$login_array = self::find_by_sql($query);
+			$login_object = array_shift($login_array);
+			return $login_object;			
+		}
+		
+		public static function check_if_email_password_matches_md5($email, $password)
+		{
+			global $database;
+			$query = "SELECT * 
+					  FROM `login`
+					  WHERE `email` = '".$email."'";
+			$result = self::find_by_sql($query);
+			
+			$login_object = array_shift($result);
+			// Check of het emailadres bestaat
+			if ( $login_object != null)
+			{
+				// Check of de MD5 hash van het emailadres uit de database
+				// overeen komt met de meegegeven MD5 hash
+				if ( strcmp($password, MD5($login_object->get_password())) == 0)
+				{
+					return true;
+				}
+				else 
+				{
+					return false;
+				}
+			}
+			else 
+			{
+				return false;
+			}
+		}										
+	}
 ?>

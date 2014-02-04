@@ -1,78 +1,77 @@
 <?php
-	require_once("class/SessionClass.php");
+	// Als je methoden uit de LoginClass wilt gebruiken
+	//  dan moet je deze class eerst toevoegen met require_once
 	require_once("class/LoginClass.php");
 	
-
-	// Check of de loginformulier velden wel zijn ingevuld
-	if (!empty($_POST['email']) && !empty($_POST['password']))
+	// Als je methoden uit de SessionClass wilt gebruiken
+	//  dan moet je deze class eerst toevoegen met require_once
+	require_once("class/SessionClass.php");
+	
+	//Check of beide velden zijn ingevoerd	
+	if ( !empty($_POST['email']) && !empty($_POST['password']))
 	{
-		/* Check in de database of beide ingevoerde waarden in
-		 * het loginformulier wel bestaan in de login tabel
-		 * Tussen de haakjes van het onderstaande if-statement
-		 * moet true of false komen te staan. We schrijven daarvoor
-		 * een method in de LoginClass class. 
-		 * Een static method uit een class kan worden aangeroepen
-		 * met: de naam van de class gevolgd door dan een
-		 * dubbele dubbele punt gevold door de naam van de method.
-		 */
+		//Check of de ingevulde emailadres en wachtwoord bestaan in database	
 		if (LoginClass::check_if_email_password_exists($_POST['email'],
 													   $_POST['password']))
 		{
-			/* Vind de logingegevens van de user die inlogt. Je krijgt
-			 * een loginClass object terug. En je kan dus de properties
-			 * getLogin() en getUserrole() opvragen. Geef het loginClass
-			 * object mee aan de login method uit het $session object. Het
-			 * $session object wordt gemaakt in het bestand SessionClass.php 
-			 */	
-				
+			/* Check nu duidelijk is dat de combinatie van email en password
+			 * bestaat of het account wel geactiveerd is.			 * 
+			 */
 			if (LoginClass::check_if_account_is_activated($_POST['email'],
 														  $_POST['password']))
-			{	
-					
-				$session->login(LoginClass::find_login_user($_POST['email'],
-															$_POST['password']));
-							
+		    {
+			
+				/* Roep de static method find_user_by_email_password aan uit
+				 * de LoginClass. Deze method geeft precies 1 LoginClass-object
+				 * terug. Je kunt via dit object de properties opvragen zoals:
+				 * get_id(), get_email(), get_password, enz......
+				 * 
+				 * Geef dit object vervolgens mee aan de method login($userObject)
+				 * uit de SessionClass. 
+				 */  								
+				$session->
+					login(LoginClass::find_user_by_email_password($_POST['email'],
+																  $_POST['password']));
+				
 				switch ($_SESSION['userrole'])
 				{
-					case 'customer':
-						header("location:index.php?content=customer_homepage");
-						break;
-					case 'administrator':
-						header("location:index.php?content=admin_homepage");
-						break;
 					case 'root':
 						header("location:index.php?content=root_homepage");
-						break;
+					break;
+					case 'administrator':
+						header("location:index.php?content=admin_homepage");			
+					break;
+					case 'customer':
+						header("location:index.php?content=customer_homepage");
+					break;
 					case 'developer':
 						header("location:index.php?content=developer_homepage");
-						break;
+					break;
 					case 'photographer':
 						header("location:index.php?content=photographer_homepage");
-						break;	
-					case 'coworker':
-						header("location:index.php?content=coworker_homepage");
-						break;			
-				}						
+					break;			
+				}
 			}
-			else 
+			else
 			{
-				echo "U account is niet geactiveerd. Check uw inbox of spambox
-					  en activeer alsnog uw account";
-				header("refresh:4; url=index.php?content=login");
-			}		
+				echo "Uw account is nog niet door u geactiveerd. Check uw<br>
+					  email voor het klikken op de activatielink";
+				header("refresh:4; url=index.php?content=homepage");
+				
+			}
 		}
 		else
 		{
-			echo "Gebruikersnaam en/of wachtwoord niet bekent";
-			header("refresh:4; url=index.php?content=login");
-		}
+			//Blijkbaar is het record niet gevonden in de database
+			echo "De ingevoerde combinatie van emailadres - wachtwoord is ons niet bekend. U wordt 	doorgestuurd naar de inlogpagina";
+			header("refresh:4; url=index.php?content=login_form");
+		}		
 	}
 	else
 	{
-		//Stuur door naar login met foutmelding
-		echo "U heeft een of meerdere velden niet ingevuld";
-		header("refresh:4; url=index.php?content=login");
+		echo 'U heeft beide of een van beide velden niet ingevuld. 
+			  U wordt doorgestuurd naar de inlogpagina';
+		header("refresh:4;url=index.php?content=login_form");
 	}
-
 
 ?>
