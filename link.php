@@ -44,6 +44,9 @@
 					echo "<li>
 							<a href=''>pho-link</a>
 						  </li>";
+					echo "<li>
+							<a href='index.php?content=upload'>Upload</a>
+						</li>";
 				break;				
 			}
 		}
