@@ -11,11 +11,23 @@
 		}
 
 		//chck of het de foto wel afkomistig is van het formulier
-		if(is_uploaded_file($_FILES['photo']['name']))
+		if(is_uploaded_file($_FILES['photo']['tmp_name']))
 		{
 			// veprlaats het bestand van tijdelijke directory temp naar de map genaamd: fotos/user_id/order_id
 			move_uploaded_file($_FILES['photo']['tmp_name']" ".$_FILES['photo']['name']);
 		}
+
+		//Nu gaan er ons thumbnailtje maken. Doormiddel van landschape en pertrait word er een verschil gemaakt met px breedte en hoogte
+		define('THUMB_SIZE', 80)
+
+		// definieer het pad naar de grote foto
+		$path_photo = $dir.$_FILES['photo']['name'];
+
+		// definieer het pad naar kleine foto
+		$path_thumbnail_photo = $dir."thumbnail/tn_".$_FILES['photo']['name'];
+
+		// vraag met een php functie getimagesize() de pixe; grootte van het bestand op
+		$specs_image = getimagesize($path_photo);
 
 
 	}
