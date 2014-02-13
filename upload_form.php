@@ -29,6 +29,37 @@
 		// vraag met een php functie getimagesize() de pixe; grootte van het bestand op
 		$specs_image = getimagesize($path_photo);
 
+		// verhouding breedte en hoogte berekenen
+		$ratio_image = $specs_image[0]/$specs_image[1];
+
+		if (_$ratio_image > 1)
+		{
+			//defineer de landscape breedte(thumbnail)
+			$tn_width = THUMB_SIZE;
+			//defineer de landscape hoogte(thumbnail)
+			$tn_heigth = THUMB_SIZE  / $ratio_image;
+		}
+		else
+		{
+			//defineer de portrait breedte(thumbnail)
+			$tn_width = THUMB_SIZE;
+			//defineer de portrait hoogte(thumbnail)
+			$tn_height = THUMB_SIZE * $ratio_image;
+		}
+
+		// Thumbnail opo zwart stukje karton
+		$thumbnail = imagecreatefromjpeg($tn_width, $tn_height);
+
+		// nu de waardes erop plakken
+		$source = imagecreatefromjpeg($path_photo);
+
+		//we gaan nu een kleine thumbnail fotootje plakken op het zwarte stuk karton
+		imagecopyresampled($thumbnail, $source, 0, 0, 0, 0, $tn_width, $tn_height, $specs_image[0], $specs_image[1]);
+
+		imagejpeg($thumbnail, $path_thumbnail_photo, 100);
+
+		var_dump($specs_image);
+  		echo $ratio_image;exit();
 
 	}
 	else
