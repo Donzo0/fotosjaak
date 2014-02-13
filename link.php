@@ -37,7 +37,7 @@
 						  </li>";
 				case 'developer':
 					echo "<li>
-							<a href=''>dev-link</a>
+							<a href='index.php?conten=selector'>selector</a>
 						  </li>";
 				break;
 				case 'photographer':
