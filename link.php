@@ -37,16 +37,13 @@
 						  </li>";
 				case 'developer':
 					echo "<li>
-							<a href='index.php?conten=selector'>selector</a>
+							<a href='index.php?content=selectors'>selectors</a>
 						  </li>";
 				break;
 				case 'photographer':
 					echo "<li>
-							<a href=''>pho-link</a>
+							<a href='index.php?content=upload'>upload</a>
 						  </li>";
-					echo "<li>
-							<a href='index.php?content=upload'>Upload</a>
-						</li>";
 				break;				
 			}
 		}
