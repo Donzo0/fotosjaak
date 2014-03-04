@@ -186,5 +186,21 @@
 		}
 		
 	}
+
+	public static function find_order_by_user_id()
+	{
+		global $database;
+
+		$query = "SELECT * FROM `order` ";
+
+		$result = $database->fire_query($query);
+
+		while ($row = mysql_fetch_array($result))
+		{
+			echo "<tr>
+					<td>".$row['order_short']."</td>
+				  </tr>";
+		}
+	}
  }
 ?>

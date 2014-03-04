@@ -22,9 +22,10 @@
 						  </li>";
 						  echo "<li>
 						  			<a href='index.php?content=opdracht'>
-						  				opdracht
+						  				OPdracht
 						  			</a>
-						  		</li>"; 
+						  		</li>"
+						  echo "<li><a href='index.php?content=opdracht-klaar'>Klaar</a></li>"; 
 				break;
 				case 'administrator':
 					echo "<li>

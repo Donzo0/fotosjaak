@@ -8,7 +8,7 @@
 	
 	if (isset($_POST['submit']))
 	{
-		$mime_type_array = array('mime/jpeg', 'mime/png', 'mime/gif');
+		$mime_type_array = array('image/jpeg', 'image/png', 'image/gif');
 		
 		if ( in_array($_FILES['photo']['type'], $mime_type_array))
 		{
