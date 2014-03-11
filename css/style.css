@@ -21,6 +21,7 @@ div#container
 	width:745px;
 	margin:0px auto;
 	border-radius:25px;
+	border:3px solid white;
 }
 
 div#banner
@@ -36,6 +37,7 @@ div#footer
 {
 	background-color:orange;
 	text-align:center;
+	border-radius:25px;
 }
 
 div#content
@@ -50,7 +52,7 @@ div#link
 {
 	border:3px solid white;
 	position:absolute;
-	left:-120px;
+	left:-160px;
 	background-color:grey;
 	border-radius:20px;
 	padding:0.5em;
@@ -59,6 +61,14 @@ div#link
 div#link ul
 {
 	list-style-type:none;
+	/*border:1px solid black;*/
+}
+
+
+div#link li
+{
+	/*border:1px solid red;*/
+	text-align:right;
 }
 
 a
@@ -73,12 +83,12 @@ table.simple
 	margin:0px auto;	
 }
 
-table.simple  th, td
+table.simple  th, td, tr th
 {
 	border:1px solid white;
 	text-align:center;
 	padding:0.3em;
-	background-color:RGB(180,180,180);
+	/*background-color:RGB(180,180,180);*/
 	color:black;
 }
 

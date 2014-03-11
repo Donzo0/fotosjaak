@@ -8,6 +8,8 @@
 	
 	if (isset($_POST['submit']))
 	{
+		//echo $_FILES['photo']['type']; exit();
+		
 		$mime_type_array = array('image/jpeg', 'image/png', 'image/gif');
 		
 		if ( in_array($_FILES['photo']['type'], $mime_type_array))
@@ -143,12 +145,13 @@
 		PhotoClass::insert_into_photo($_POST['order_id'],
 									  $_FILES['photo']['name'],
 									  $_POST['description']);
-
+									  
 		// Succesmelding voor het uploaden van de foto
 		echo "Het uploaden van de foto met de naam: <strong>".
 		      $_FILES['photo']['name']."</strong><br>is gelukt. U wordt 
 		      		doorgestuurd naar de uploadpagina.";
 		header("refresh:4;url=index.php?content=upload_form&user_id=".$_POST['user_id']."&order_id=".$_POST['order_id']);
+		
 		}
 		else
 		{
